@@ -1,5 +1,4 @@
-const computerOptions = ['rock', 'paper', 'scissors']; //Array of choices
-
+const computerOptions = ['rock', 'paper', 'scissors'];
 //Selects a random number between 0 - 1, multiplies it by 3, and cuts off the decimal. The number refers-
 //to a random index in the computerOptions array.
 function getComputerChoice() { 
@@ -7,9 +6,7 @@ function getComputerChoice() {
     return computerChoice;
 };
 
-
-let playerChoice; //Creates an empty variable to later store button values
-
+let playerChoice;
 //Assigns a variable to the corresponding button elements. Adds an event to each button that when clicked, will store-
 //their labeled value into the playerChoice variable and play a single round using the playRound function.
 const rockBtn = document.querySelector('#rock-btn');
@@ -38,34 +35,71 @@ function playRound() {
     let computerChoice = getComputerChoice();
     let result;
     if (playerChoice == 'scissors' && computerChoice == 'rock') {
-        result = 'You lose. Rock beats scissors';
+        result = 'You lose this round. Rock beats scissors.';
         computerScore++;
     } else if (playerChoice == 'scissors' && computerChoice == 'paper') {
-        result = 'You win! Scissors beats paper';
+        result = 'You win this round! Scissors beats paper.';
         playerScore++;
     } else if (playerChoice == 'scissors' && computerChoice == 'scissors') {
-        result = 'You tie! You both chose scissors';
+        result = 'You tie this round! You both chose scissors.';
         tieScore++;
     } else if (playerChoice == 'paper' && computerChoice == 'rock') {
-        result = 'You win! Paper beats rock';
+        result = 'You win this round! Paper beats rock.';
         playerScore++;
     } else if (playerChoice == 'paper' && computerChoice == 'paper') {
-        result = 'You tie! You both chose paper';
+        result = 'You tie this round! You both chose paper.';
         tieScore++;
     } else if (playerChoice == 'paper' && computerChoice == 'scissors') {
-        result = 'You lose! Scissors beats paper'
+        result = 'You lose this round! Scissors beats paper.'
         computerScore++;
     } else if (playerChoice == 'rock' && computerChoice == 'rock') {
-        result = 'You tie! You both chose rock'
+        result = 'You tie this round! You both chose rock.'
         tieScore++;
     } else if (playerChoice == 'rock' && computerChoice == 'paper') {
-        result = 'You lose! Paper beats rock';
+        result = 'You lose this round! Paper beats rock.';
         computerScore++;
     } else if (playerChoice == 'rock' && computerChoice == 'scissors') {
-        result = 'You win! Rock beats scissors';
+        result = 'You win this round! Rock beats scissors.';
         playerScore++;
     }
-    document.querySelector('#result-display').innerText = result;
-    document.querySelector('#score-display').innerText = `Player: ${playerScore} || Computer: ${computerScore} || Ties: ${tieScore}`
+    updateResultDisplay(result);
+    updateScoreDisplay();
+    checkWinner(playerScore, computerScore);
     return result;
 };
+
+function updateResultDisplay(result) {
+    document.querySelector('#result-display').innerText = result;
+};
+
+function updateScoreDisplay() {
+    document.querySelector('#score-display').innerText = `Player: ${playerScore} || Computer: ${computerScore} || Ties: ${tieScore}`;
+};
+
+const buttons = [rockBtn, paperBtn, scissorsBtn];
+
+function checkWinner(playerScore, computerScore) {
+    if (playerScore == 5) {
+        document.querySelector('#result-display').innerText = 'You beat the computer!';
+        buttons.forEach(button => button.disabled = true);
+        resetContainer.appendChild(resetBtn);
+
+    } else if (computerScore == 5) {
+        document.querySelector('#result-display').innerText = 'You lose to the computer!';
+        buttons.forEach(button => button.disabled = true);
+        resetContainer.appendChild(resetBtn);
+    }
+};
+
+const resetContainer = document.querySelector('#reset-container');
+const resetBtn = document.createElement('button');
+resetBtn.textContent = 'Reset Game';
+
+resetBtn.addEventListener('click', () => {
+  playerScore = 0;
+  computerScore = 0;
+  tieScore = 0;
+  updateScoreDisplay();
+  buttons.forEach(button => button.disabled = false);
+  resetContainer.removeChild(resetBtn);
+});
