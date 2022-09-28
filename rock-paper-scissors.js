@@ -1,14 +1,10 @@
 const computerOptions = ['rock', 'paper', 'scissors'];
-//Selects a random number between 0 - 1, multiplies it by 3, and cuts off the decimal. The number refers-
-//to a random index in the computerOptions array.
 function getComputerChoice() { 
     let computerChoice = computerOptions[Math.floor(Math.random() * 3)];
     return computerChoice;
 };
 
 let playerChoice;
-//Assigns a variable to the corresponding button elements. Adds an event to each button that when clicked, will store-
-//their labeled value into the playerChoice variable and play a single round using the playRound function.
 const rockBtn = document.querySelector('#rock-btn');
 rockBtn.addEventListener('click', () => {
     playerChoice = document.querySelector('#rock-btn').innerText.toLowerCase();
@@ -28,9 +24,6 @@ scissorsBtn.addEventListener('click', () => {
 let playerScore = 0;
 let computerScore = 0;
 let tieScore = 0;
-//Compares the computerChoice (randomized) and playerChoice (button click) and stores a particular string into the-
-//result variable depending on the outcome of the comparison. Changes result-display div to the result and updates-
-//the score-display div
 function playRound() {
     let computerChoice = getComputerChoice();
     let result;
@@ -102,4 +95,5 @@ resetBtn.addEventListener('click', () => {
   updateScoreDisplay();
   buttons.forEach(button => button.disabled = false);
   resetContainer.removeChild(resetBtn);
+  document.querySelector('#result-display').innerText = 'First to 5 wins!';
 });
